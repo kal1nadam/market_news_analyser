@@ -1,0 +1,36 @@
+cat > .gitignore << 'EOF'
+## Ignore Visual Studio and .NET build artifacts
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/*.user
+**/*.suo
+**/*.swp
+*.userprefs
+*.csproj.user
+
+## Ignore Rider / JetBrains
+.idea/
+*.iml
+
+## Ignore logs, secrets, coverage, and other generated files
+*.log
+*.tlog
+*.coverage
+*.DS_Store
+.env
+.env.*
+.secrets/
+coverage/
+TestResults/
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+
+## Ignore Docker junk (we’ll add Dockerfiles later)
+**/Dockerfile*
+docker-compose*.yml
+EOF
+
