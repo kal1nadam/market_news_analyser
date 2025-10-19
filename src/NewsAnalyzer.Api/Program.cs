@@ -1,4 +1,6 @@
 using FluentValidation;
+using MediatR;
+using NewsAnalyzer.Application.Common.Behaviors;
 using NewsAnalyzer.Application.Health.Queries;
 using NewsAnalyzer.Infrastructure;
 
@@ -9,6 +11,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetHealthStatusQuery).Assembly);
 });
 builder.Services.AddValidatorsFromAssembly(typeof(GetHealthStatusQuery).Assembly);
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
