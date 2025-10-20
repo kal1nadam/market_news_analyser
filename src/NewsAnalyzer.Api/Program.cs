@@ -1,9 +1,11 @@
 using FluentValidation;
 using MediatR;
+using NewsAnalyzer.Api;
 using NewsAnalyzer.Api.Middleware;
 using NewsAnalyzer.Application.Common.Behaviors;
 using NewsAnalyzer.Application.Health.Queries;
 using NewsAnalyzer.Infrastructure;
+using NewsAnalyzer.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Create and migrate database if needed
+await app.EnsureDbCreatedAndMigratedAsync();
 
 app.UseMiddleware<ExceptionMiddleware>();
 

@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using NewsAnalyzer.Application.Common.Interfaces;
+using NewsAnalyzer.Application.Entities;
 
-namespace NewsAnalyzer.Infrastructure.Persistance;
+namespace NewsAnalyzer.Infrastructure.Persistence;
 
-public sealed class AppDbContext : DbContext
+public sealed class AppDbContext : DbContext, IAppDbContext
 {
     public DbSet<IngestionLog> IngestionLogs => Set<IngestionLog>();
     
@@ -22,12 +24,4 @@ public sealed class AppDbContext : DbContext
             b.Property(x => x.Message).HasMaxLength(2000);
         });
     }
-}
-
-public sealed class IngestionLog
-{
-    public int Id { get; set; }
-    public string Source { get; set; } = default!;
-    public DateTime CreatedUtc { get; set; }
-    public string? Message { get; set; }
 }
