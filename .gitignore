@@ -1,4 +1,3 @@
-cat > .gitignore << 'EOF'
 ## Ignore Visual Studio and .NET build artifacts
 **/bin/
 **/obj/
@@ -31,6 +30,8 @@ TestResults/
 
 ## Ignore Docker junk (we’ll add Dockerfiles later)
 **/Dockerfile*
-docker-compose*.yml
-EOF
+docker-compose*.xml
 
+# Keep base config, ignore environment overrides
+!appsettings.json
+appsettings.*.json
