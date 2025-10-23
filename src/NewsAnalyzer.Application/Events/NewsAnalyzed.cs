@@ -1,3 +1,3 @@
 namespace NewsAnalyzer.Application.Events;
 
-public sealed record NewsAnalyzed(); // Add properties 
+public sealed record NewsAnalyzed(Guid NewsId); 
