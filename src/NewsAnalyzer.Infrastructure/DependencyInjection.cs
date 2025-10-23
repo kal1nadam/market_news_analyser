@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using NewsAnalyzer.Application.Common.Interfaces;
+using NewsAnalyzer.Application.Common.Interfaces.Persistence;
 using NewsAnalyzer.Infrastructure.Bus;
 using NewsAnalyzer.Infrastructure.Common;
 using NewsAnalyzer.Infrastructure.External.News;
-using NewsAnalyzer.Infrastructure.Outbox;
 using NewsAnalyzer.Infrastructure.Persistence;
 using NewsAnalyzer.Infrastructure.Workers;
 
@@ -15,6 +16,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        // Bind options
+        services.Configure<NewsApiOptions>(configuration.GetSection("NewsApi"));
+        
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
         services.AddSingleton<IEventBus, ChannelEventBus>();
         
@@ -29,13 +33,16 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("AppDb") ?? "Data Source=App_Data/NewsAnalyzer.db";
         services.AddDbContext<AppDbContext>(opts => opts.UseSqlite(connectionString));
         
-        services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
-        
+        // Repositories
+        services.AddScoped<INewsRepository, NewsRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         // Http Clients
-        services.AddHttpClient<NewsProvider>(client =>
+        services.AddHttpClient<NewsProvider>((sp, client) =>
         {
-            client.BaseAddress = new Uri("https://financialmodelingprep.com/stable/");
+            // Get base url from config
+            var options = sp.GetRequiredService<IOptions<NewsApiOptions>>().Value;
+            client.BaseAddress = new Uri(options.BaseUrl);
         });
 
         return services;
