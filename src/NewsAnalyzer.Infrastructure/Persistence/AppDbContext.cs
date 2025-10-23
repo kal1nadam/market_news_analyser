@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using NewsAnalyzer.Application.Common.Interfaces;
 using NewsAnalyzer.Application.Entities;
 
 namespace NewsAnalyzer.Infrastructure.Persistence;
 
-public sealed class AppDbContext : DbContext, IAppDbContext
+public sealed class AppDbContext : DbContext
 {
     public DbSet<IngestionLog> IngestionLogs => Set<IngestionLog>();
     public DbSet<News> News => Set<News>();
