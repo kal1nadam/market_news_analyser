@@ -1,9 +1,9 @@
 using System.Text.Json.Serialization;
 using NewsAnalyzer.Application.Common.Convertors;
 
-namespace NewsAnalyzer.Application.DTO;
+namespace NewsAnalyzer.Application.DTO.External;
 
-public class NewsDto
+public class ImportNewsDto
 {
     [JsonPropertyName("symbol")]
     public string Symbol { get; set; }

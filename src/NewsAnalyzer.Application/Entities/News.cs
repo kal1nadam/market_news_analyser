@@ -1,7 +1,12 @@
 using NewsAnalyzer.Application.DTO;
+using NewsAnalyzer.Application.DTO.External;
 
 namespace NewsAnalyzer.Application.Entities;
 
+/// <summary>
+/// Domain entity.
+/// Database table: News
+/// </summary>
 public sealed class News
 {
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -25,9 +30,13 @@ public sealed class News
     
     public string? ReasonForMarketTrend { get; set; }
 
-    public static News Create(NewsDto dto) => new()
+    // TODO use automapper - news mapping profile
+    public static News Create(ImportNewsDto dto) => new()
     {
-        // TODO map news
+        PublishedAt = dto.PublishedDate,
+        Headline = dto.Title,
+        Summary = dto.Text,
+        Url = dto.Url
     };
     
     public void MarkAnalyzed() => Analyzed = true;
