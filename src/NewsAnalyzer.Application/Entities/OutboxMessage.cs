@@ -29,6 +29,12 @@ public sealed class OutboxMessage
     
     public void IncrementAttempts() => Attempts++;
     
-    public void SetError(string error) => Error = error;
+    public void SetError(string? error) => Error = error;
+    
+    public void Lock(string workerId)
+    {
+        LockedAt = DateTime.UtcNow;
+        LockedBy = workerId;
+    }
 
 }
