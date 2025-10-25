@@ -41,8 +41,10 @@ public sealed class OutboxStore : IOutboxStore
 
     public async Task<IReadOnlyList<OutboxMessage>> DequeueAsync(int batchSize, CancellationToken ct)
     {
+        var now = DateTime.UtcNow;
+        
         return await _dbContext.OutboxMessages
-            .Where(m => m.ProcessedAt == null)
+            .Where(o => o.ProcessedAt == null && (o.LockedAt == null || o.LockedAt < now.AddMinutes(-2)))
             .OrderBy(m => m.OccurredAt)
             .Take(batchSize)
             .ToListAsync(ct);
