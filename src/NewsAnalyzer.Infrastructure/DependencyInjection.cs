@@ -27,7 +27,7 @@ public static class DependencyInjection
 
         // Background services
         services.AddHostedService<OutboxPublisherService>();
-        
+        services.AddHostedService<NewsEnricherHostedService>();
         
         // Configure DbContext with SQLite
         var connectionString = configuration.GetConnectionString("AppDb") ?? "Data Source=App_Data/NewsAnalyzer.db";
