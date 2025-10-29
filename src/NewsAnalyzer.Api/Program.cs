@@ -6,6 +6,7 @@ using NewsAnalyzer.Application.Common.Behaviors;
 using NewsAnalyzer.Application.Health.Queries;
 using NewsAnalyzer.Infrastructure;
 using NewsAnalyzer.Infrastructure.Persistence;
+using NewsAnalyzer.Infrastructure.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+
+app.MapHub<NewsHub>("/hubs/news");
 
 app.UseAuthorization();
 

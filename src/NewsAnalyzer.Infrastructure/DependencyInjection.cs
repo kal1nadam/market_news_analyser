@@ -8,6 +8,7 @@ using NewsAnalyzer.Infrastructure.Bus;
 using NewsAnalyzer.Infrastructure.Common;
 using NewsAnalyzer.Infrastructure.External.News;
 using NewsAnalyzer.Infrastructure.Persistence;
+using NewsAnalyzer.Infrastructure.SignalR;
 using NewsAnalyzer.Infrastructure.Workers;
 
 namespace NewsAnalyzer.Infrastructure;
@@ -22,12 +23,18 @@ public static class DependencyInjection
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
         services.AddSingleton<IEventBus, ChannelEventBus>();
         
+        services.AddScoped<INewsProcessor, NewsProcessor>();
+
+        // Must be call to register HubContext used in the notifier
+        services.AddSignalR();
+        services.AddScoped<INewsNotifier, NewsNotifier>();
+        
         services.AddScoped<INewsProvider, NewsProvider>();
         services.AddScoped<IOutboxStore, OutboxStore>();
 
         // Background services
         services.AddHostedService<OutboxPublisherService>();
-        services.AddHostedService<NewsEnricherHostedService>();
+        services.AddHostedService<NewsAnalyzerHostedService>();
         
         // Configure DbContext with SQLite
         var connectionString = configuration.GetConnectionString("AppDb") ?? "Data Source=App_Data/NewsAnalyzer.db";
