@@ -20,6 +20,12 @@ public sealed class NewsRepository : INewsRepository
         return items.Select(i => i.Id).ToList();
     }
 
+    public async Task<News?> GetByIdAsync(Guid id, CancellationToken ct)
+    {
+        return await _dbContext.News
+            .FirstOrDefaultAsync(n => n.Id == id, ct);
+    }
+
     public async Task<IReadOnlyList<News>> GetAsync(int page, int pageSize, CancellationToken ct)
     {
         return await _dbContext.News
