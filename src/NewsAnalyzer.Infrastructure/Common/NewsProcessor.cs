@@ -36,7 +36,7 @@ public sealed class NewsProcessor : INewsProcessor
             // Call AI analyzer - using OpenAI to analyze
             var analysis =  await _aiAnalyzer.AnalyzeNewsAsync(param, ct);
             
-            if (analysis is not null)
+            if (analysis is not null && analysis.ImpactPercent > 0)
             {
                 news.ImpactPercentage = (decimal)analysis.ImpactPercent / 100; // Convert into percentage
                 news.MarketTrend = analysis.MarketTrend;
