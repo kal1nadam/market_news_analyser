@@ -6,7 +6,8 @@ using NewsAnalyzer.Application.Common.Interfaces;
 using NewsAnalyzer.Application.Common.Interfaces.Persistence;
 using NewsAnalyzer.Infrastructure.Bus;
 using NewsAnalyzer.Infrastructure.Common;
-using NewsAnalyzer.Infrastructure.External.News;
+using NewsAnalyzer.Infrastructure.External.Fmp;
+using NewsAnalyzer.Infrastructure.External.OpenAi;
 using NewsAnalyzer.Infrastructure.Persistence;
 using NewsAnalyzer.Infrastructure.SignalR;
 using NewsAnalyzer.Infrastructure.Workers;
@@ -19,6 +20,7 @@ public static class DependencyInjection
     {
         // Bind options
         services.Configure<NewsApiOptions>(configuration.GetSection("NewsApi"));
+        services.Configure<OpenAiApiOptions>(configuration.GetSection("OpenAiApi"));
         
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
         services.AddSingleton<IEventBus, ChannelEventBus>();
@@ -29,7 +31,7 @@ public static class DependencyInjection
         services.AddSignalR();
         services.AddScoped<INewsNotifier, NewsNotifier>();
         
-        services.AddScoped<INewsProvider, NewsProvider>();
+        services.AddScoped<INewsProvider, FmpNewsProvider>();
         services.AddScoped<IOutboxStore, OutboxStore>();
 
         // Background services
@@ -45,7 +47,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         // Http Clients
-        services.AddHttpClient<NewsProvider>((sp, client) =>
+        services.AddHttpClient<FmpNewsProvider>((sp, client) =>
         {
             // Get base url from config
             var options = sp.GetRequiredService<IOptions<NewsApiOptions>>().Value;
