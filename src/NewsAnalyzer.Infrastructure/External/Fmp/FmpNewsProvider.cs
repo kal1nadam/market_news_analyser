@@ -22,7 +22,7 @@ public sealed class FmpNewsProvider : INewsProvider
         return news;
     }
     
-    private async Task<List<ImportNewsDto>> FetchNewsFromFmpAsync(int page = 0, int limit = 10)
+    private async Task<List<ImportNewsDto>> FetchNewsFromFmpAsync(int page = 0, int limit = 3)
     {
         var url = "news/stock-latest" + 
                   $"?page={Uri.EscapeDataString(page.ToString())}" + 
