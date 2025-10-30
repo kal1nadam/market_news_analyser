@@ -32,6 +32,7 @@ public static class DependencyInjection
         services.AddScoped<INewsNotifier, NewsNotifier>();
         
         services.AddScoped<INewsProvider, FmpNewsProvider>();
+        services.AddScoped<IAiAnalyzer, OpenAiAnalyzer>();
         services.AddScoped<IOutboxStore, OutboxStore>();
 
         // Background services
