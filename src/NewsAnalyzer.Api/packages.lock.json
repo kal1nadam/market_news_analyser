@@ -665,6 +665,14 @@
         "resolved": "11.0.2",
         "contentHash": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ=="
       },
+      "OpenAI": {
+        "type": "Transitive",
+        "resolved": "2.5.0",
+        "contentHash": "DADdrU3XcqwcRfANPl+mmrIROoPZ8m4bQMoLSLq7Ao+eaRr3HdTki+h6NUiJOewb9KpQ8zV3ujXUZIQjIGH7aQ==",
+        "dependencies": {
+          "System.ClientModel": "1.6.1"
+        }
+      },
       "SQLitePCLRaw.bundle_e_sqlite3": {
         "type": "Transitive",
         "resolved": "2.1.10",
@@ -720,6 +728,15 @@
         "type": "Transitive",
         "resolved": "4.6.0",
         "contentHash": "lN6tZi7Q46zFzAbRYXTIvfXcyvQQgxnY7Xm6C6xQ9784dEL1amjM6S6Iw4ZpsvesAKnRVsM4scrDQaDqSClkjA=="
+      },
+      "System.ClientModel": {
+        "type": "Transitive",
+        "resolved": "1.6.1",
+        "contentHash": "xcHHhDqB5MnOOY8yIn64Vzp6gtBEs6k5J1hluG04CrShSvQNXOx4PSDs7wJiXLDidlY/FZJmxJdKTKskyJwjvw==",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
+          "System.Memory.Data": "8.0.1"
+        }
       },
       "System.CodeDom": {
         "type": "Transitive",
@@ -794,6 +811,11 @@
         "resolved": "4.5.3",
         "contentHash": "3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA=="
       },
+      "System.Memory.Data": {
+        "type": "Transitive",
+        "resolved": "8.0.1",
+        "contentHash": "BVYuec3jV23EMRDeR7Dr1/qhx7369dZzJ9IWy2xylvb4YfXsrUxspWc4UWYid/tj4zZK58uGZqn2WQiaDMhmAg=="
+      },
       "System.Net.WebSockets.WebSocketProtocol": {
         "type": "Transitive",
         "resolved": "5.1.0",
@@ -853,7 +875,8 @@
           "Microsoft.Extensions.Configuration": "[10.0.0-rc.2.25502.107, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[8.0.1, )",
           "Microsoft.Extensions.Http": "[10.0.0-rc.2.25502.107, )",
-          "NewsAnalyzer.Application": "[1.0.0, )"
+          "NewsAnalyzer.Application": "[1.0.0, )",
+          "OpenAI": "[2.5.0, )"
         }
       }
     }
