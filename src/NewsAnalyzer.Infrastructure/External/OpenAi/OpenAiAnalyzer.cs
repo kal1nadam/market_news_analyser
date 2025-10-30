@@ -23,11 +23,11 @@ public class OpenAiAnalyzer : IAiAnalyzer
     
     public async Task<NewsAnalysisDto?> AnalyzeNewsAsync(EnrichNewsPromptDto param, CancellationToken ct = default)
     {
-        var developerMessage = await File.ReadAllTextAsync("Common/OpenAi/DeveloperMessages/NewsAnalysis.txt", ct);
+        var developerMessage = await File.ReadAllTextAsync("../NewsAnalyzer.Application/Common/OpenAi/DeveloperMessages/NewsAnalysis.txt", ct);
 
         var userMessage = JsonSerializer.Serialize(param);
 
-        var outputJsonSchema = await File.ReadAllTextAsync("Common/OpenAi/Schemas/NewsAnalysis.txt", ct);
+        var outputJsonSchema = await File.ReadAllTextAsync("../NewsAnalyzer.Application/Common/OpenAi/Schemas/NewsAnalysis.json", ct);
         
         var creationOptions = new ResponseCreationOptions()
         {
