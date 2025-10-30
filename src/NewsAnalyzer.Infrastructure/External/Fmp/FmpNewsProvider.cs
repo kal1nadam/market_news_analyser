@@ -1,41 +1,28 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
 using NewsAnalyzer.Application.Common.Interfaces;
-using NewsAnalyzer.Application.DTO;
 using NewsAnalyzer.Application.DTO.External;
 
-namespace NewsAnalyzer.Infrastructure.External.News;
+namespace NewsAnalyzer.Infrastructure.External.Fmp;
 
-public sealed class NewsProvider : INewsProvider
+public sealed class FmpNewsProvider : INewsProvider
 {
     private readonly HttpClient _httpClient;
     private readonly NewsApiOptions _options;
     
-    public NewsProvider(IHttpClientFactory httpClientFactory, IOptions<NewsApiOptions> options)
+    public FmpNewsProvider(IHttpClientFactory httpClientFactory, IOptions<NewsApiOptions> options)
     {
-        _httpClient = httpClientFactory.CreateClient(nameof(NewsProvider));
+        _httpClient = httpClientFactory.CreateClient(nameof(FmpNewsProvider));
         _options = options.Value;
     }
     
     public async Task<List<ImportNewsDto>> GetNewsAsync(CancellationToken ct = default)
     {
-        // TODO fetch real data
-        ImportNewsDto mockDto = new()
-        {
-            Image = "image test",
-            PublishedDate = DateTime.UtcNow,
-            Publisher = "publisher test",
-            Site = "site test",
-            Symbol = "TEST",
-            Text = "This is a test news article for unit testing purposes.",
-            Title = "Test News Article",
-            Url = "url test"
-        };
-
-        return [mockDto];
+        var news = await FetchNewsFromFmpAsync();
+        return news;
     }
     
-    private async Task<List<ImportNewsDto>> FetchNewsFromFmpAsync(int page = 0, int limit = 50)
+    private async Task<List<ImportNewsDto>> FetchNewsFromFmpAsync(int page = 0, int limit = 10)
     {
         var url = "news/stock-latest" + 
                   $"?page={Uri.EscapeDataString(page.ToString())}" + 
