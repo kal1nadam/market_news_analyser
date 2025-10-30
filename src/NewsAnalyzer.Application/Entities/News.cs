@@ -17,6 +17,8 @@ public sealed class News
     
     public string Summary { get; set; } = null!;
     
+    public string TickerSymbol { get; set; } = null!;
+    
     public string Url { get; set; } = null!;
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -34,6 +36,7 @@ public sealed class News
     public static News Create(ImportNewsDto dto) => new()
     {
         PublishedAt = dto.PublishedDate,
+        TickerSymbol = dto.Symbol,
         Headline = dto.Title,
         Summary = dto.Text,
         Url = dto.Url

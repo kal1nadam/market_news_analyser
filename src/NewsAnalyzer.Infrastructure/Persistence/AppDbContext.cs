@@ -32,6 +32,7 @@ public sealed class AppDbContext : DbContext
             b.Property(x => x.PublishedAt).IsRequired();
             b.Property(x => x.Headline).HasMaxLength(500).IsRequired();
             b.Property(x => x.Summary).HasMaxLength(2000).IsRequired();
+            b.Property(x => x.TickerSymbol).HasMaxLength(10).IsRequired();
             b.Property(x => x.Url).HasMaxLength(1000).IsRequired();
             b.Property(x => x.CreatedAt).IsRequired();
             b.Property(x => x.Analyzed).IsRequired();
