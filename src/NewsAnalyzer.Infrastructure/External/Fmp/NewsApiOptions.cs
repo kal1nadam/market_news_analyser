@@ -1,4 +1,4 @@
-namespace NewsAnalyzer.Infrastructure.External.News;
+namespace NewsAnalyzer.Infrastructure.External.Fmp;
 
 public sealed class NewsApiOptions
 {

@@ -3,7 +3,7 @@ using NewsAnalyzer.Application.Common.Convertors;
 
 namespace NewsAnalyzer.Application.DTO.External;
 
-public class ImportNewsDto
+public sealed class ImportNewsDto
 {
     [JsonPropertyName("symbol")]
     public string Symbol { get; set; }

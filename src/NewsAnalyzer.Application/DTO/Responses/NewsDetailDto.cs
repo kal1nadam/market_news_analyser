@@ -1,6 +1,6 @@
 namespace NewsAnalyzer.Application.DTO.Responses;
 
-public class NewsDetailDto
+public sealed class NewsDetailDto
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     
