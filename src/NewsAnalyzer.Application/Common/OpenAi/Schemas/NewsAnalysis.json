@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hook": {
+      "type": "string",
+      "description": "Attractive, factual push-notification title."
+    },
+    "impact_percent": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "0–100 strict scale; only truly breaking items score >70."
+    },
+    "market_trend": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "Up",
+        "Down",
+        null
+      ],
+      "description": "Short-term market reaction (only for breaking news). Null if not breaking."
+    },
+    "reason_for_market_trend": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Reason why the market trend is set (only if market_trend is not null). Null otherwise."
+    }
+  },
+  "required": [
+    "hook",
+    "impact_percent",
+    "market_trend",
+    "reason_for_market_trend"
+  ]
+}
