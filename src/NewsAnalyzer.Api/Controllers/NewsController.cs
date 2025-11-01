@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NewsAnalyzer.Application.Ingestion.Commands;
 using NewsAnalyzer.Application.News.Commands;
 using NewsAnalyzer.Application.News.Queries;
 
