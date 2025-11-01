@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="News\Services\" />
+  </ItemGroup>
+
 </Project>

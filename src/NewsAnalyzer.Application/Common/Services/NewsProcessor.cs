@@ -2,7 +2,7 @@ using NewsAnalyzer.Application.Common.Interfaces;
 using NewsAnalyzer.Application.Common.Interfaces.Persistence;
 using NewsAnalyzer.Application.DTO;
 
-namespace NewsAnalyzer.Infrastructure.Common;
+namespace NewsAnalyzer.Application.Common.Services;
 
 public sealed class NewsProcessor : INewsProcessor
 {

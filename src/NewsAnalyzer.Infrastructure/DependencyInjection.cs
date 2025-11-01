@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using NewsAnalyzer.Application.Common.Interfaces;
 using NewsAnalyzer.Application.Common.Interfaces.Persistence;
 using NewsAnalyzer.Infrastructure.Bus;
 using NewsAnalyzer.Infrastructure.Common;
 using NewsAnalyzer.Infrastructure.External.Fmp;
 using NewsAnalyzer.Infrastructure.External.OpenAi;
+using NewsAnalyzer.Infrastructure.Hangfire;
 using NewsAnalyzer.Infrastructure.Persistence;
 using NewsAnalyzer.Infrastructure.SignalR;
 using NewsAnalyzer.Infrastructure.Workers;
@@ -25,8 +25,6 @@ public static class DependencyInjection
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
         services.AddSingleton<IEventBus, ChannelEventBus>();
         
-        services.AddScoped<INewsProcessor, NewsProcessor>();
-
         // Must be call to register HubContext used in the notifier
         services.AddSignalR();
         services.AddScoped<INewsNotifier, NewsNotifier>();
@@ -35,25 +33,23 @@ public static class DependencyInjection
         services.AddScoped<IAiAnalyzer, OpenAiAnalyzer>();
         services.AddScoped<IOutboxStore, OutboxStore>();
 
+        services.AddScoped<IBackgroundJobScheduler, BackgroundJobScheduler>();
+        
         // Background services
         services.AddHostedService<OutboxPublisherService>();
         services.AddHostedService<NewsAnalyzerHostedService>();
         
+        var connectionString = configuration.GetConnectionString("AppDb") ?? "Data Source=App_Data/NewsAnalyzer.db;";
+        
         // Configure DbContext with SQLite
-        var connectionString = configuration.GetConnectionString("AppDb") ?? "Data Source=App_Data/NewsAnalyzer.db";
         services.AddDbContext<AppDbContext>(opts => opts.UseSqlite(connectionString));
+        
+        // Add Hangfire
+        services.AddHangfire(connectionString);
         
         // Repositories
         services.AddScoped<INewsRepository, NewsRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        
-        // Http Clients
-        services.AddHttpClient<FmpNewsProvider>((sp, client) =>
-        {
-            // Get base url from config
-            var options = sp.GetRequiredService<IOptions<NewsApiOptions>>().Value;
-            client.BaseAddress = new Uri(options.BaseUrl);
-        });
 
         return services;
     }
