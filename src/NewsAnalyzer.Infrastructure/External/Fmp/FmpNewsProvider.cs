@@ -10,10 +10,12 @@ public sealed class FmpNewsProvider : INewsProvider
     private readonly HttpClient _httpClient;
     private readonly NewsApiOptions _options;
     
-    public FmpNewsProvider(IHttpClientFactory httpClientFactory, IOptions<NewsApiOptions> options)
+    public FmpNewsProvider(HttpClient httpClient, IOptions<NewsApiOptions> options)
     {
-        _httpClient = httpClientFactory.CreateClient(nameof(FmpNewsProvider));
+        _httpClient = httpClient;
         _options = options.Value;
+        
+        _httpClient.BaseAddress = new Uri(_options.BaseUrl);
     }
     
     public async Task<List<ImportNewsDto>> GetNewsAsync(CancellationToken ct = default)
