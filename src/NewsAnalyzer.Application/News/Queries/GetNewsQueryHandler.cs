@@ -20,7 +20,6 @@ public sealed class GetNewsQueryHandler : IRequestHandler<GetNewsQuery, List<New
     {
         var newsItems = await _newsRepository.GetAsync(request.Page, request.PageSize, cancellationToken);
         
-        // TODO use automapper - news mapping profile
         // Map Entities to DTOs
         var mappedNews = newsItems.Select(n => new NewsDetailDto
         {

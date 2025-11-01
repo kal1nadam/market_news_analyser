@@ -32,7 +32,6 @@ public sealed class News
     
     public string? ReasonForMarketTrend { get; set; }
 
-    // TODO use automapper - news mapping profile
     public static News Create(ImportNewsDto dto) => new()
     {
         PublishedAt = dto.PublishedDate,
