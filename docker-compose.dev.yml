@@ -8,7 +8,7 @@ services:
       ASPNETCORE_URLS: http://+:8080
       URLS: http://+:8080
       Database__Provider: Sqlite
-      ConnectionStrings__AppDb: Data Source=/app/App_Data/newsanalyzer.db
+      ConnectionStrings__AppDb: Data Source=/app/src/NewsAnalyzer.Api/App_Data/newsanalyzer.db;
     volumes:
       - ./:/app:cached
       - nuget-cache:/root/.nuget/packages
