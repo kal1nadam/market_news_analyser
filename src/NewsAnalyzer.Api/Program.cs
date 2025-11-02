@@ -1,5 +1,6 @@
 using FluentValidation;
 using Hangfire;
+using Hangfire.Dashboard;
 using MediatR;
 using NewsAnalyzer.Api;
 using NewsAnalyzer.Api.Middleware;
@@ -10,6 +11,7 @@ using NewsAnalyzer.Application.Health.Queries;
 using NewsAnalyzer.Application.News.Commands;
 using NewsAnalyzer.Infrastructure;
 using NewsAnalyzer.Infrastructure.Common;
+using NewsAnalyzer.Infrastructure.Hangfire;
 using NewsAnalyzer.Infrastructure.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,11 +40,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Add Hangfire dashboard
-app.UseHangfireDashboard("/hangfire");
-
 // Create and migrate database if needed
 await app.EnsureDbCreatedAndMigratedAsync();
+
+// Add Hangfire dashboard
+app.UseHangfireDashboard("/hangfire", new DashboardOptions()
+{
+    Authorization = new[] {new Authorization.AllowAllDashboardAuthorizationFilter()}
+});
 
 app.UseMiddleware<ExceptionMiddleware>();
 
