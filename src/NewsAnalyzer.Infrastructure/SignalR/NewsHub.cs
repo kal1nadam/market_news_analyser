@@ -4,9 +4,9 @@ namespace NewsAnalyzer.Infrastructure.SignalR;
 
 public class NewsHub : Hub
 {
-    public override Task OnConnectedAsync()
+    public override async Task OnConnectedAsync()
     {
-        Console.WriteLine($"Client connected: {Context.ConnectionId}");
-        return base.OnConnectedAsync();
+        await Groups.AddToGroupAsync(Context.ConnectionId, GroupName.NewsNotifications, Context.ConnectionAborted);
+        await base.OnConnectedAsync();
     }
 }

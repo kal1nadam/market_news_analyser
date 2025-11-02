@@ -1,6 +1,7 @@
 using NewsAnalyzer.Application.Common.Interfaces;
 using NewsAnalyzer.Application.Common.Interfaces.Persistence;
 using NewsAnalyzer.Application.DTO;
+using NewsAnalyzer.Application.ValueObjects;
 
 namespace NewsAnalyzer.Application.Common.Services;
 
@@ -57,7 +58,8 @@ public sealed class NewsProcessor : INewsProcessor
         // Notify if impact percentage is greater than 70%
         if (news?.ImpactPercentage is > 70)
         {
-            await _newsNotifier.BroadcastNewsAsync(newsId);
+            var notification = new NewsNotification(news.Id, news.TickerSymbol, news.Headline, news.CreatedAt, news.ImpactPercentage, news.MarketTrend, news.ReasonForMarketTrend);
+            await _newsNotifier.BroadcastNewsAsync(notification);
         }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 using NewsAnalyzer.Application.Common.Interfaces;
+using NewsAnalyzer.Application.ValueObjects;
 
 namespace NewsAnalyzer.Infrastructure.SignalR;
 
@@ -12,9 +13,8 @@ public sealed class NewsNotifier : INewsNotifier
         _hubContext = hubContext;
     }
     
-    public Task BroadcastNewsAsync(Guid newsId)
+    public Task BroadcastNewsAsync(NewsNotification notification)
     {
-        // TODO use record with more info
-        return _hubContext.Clients.All.SendAsync("ReceiveNewsUpdate", newsId);
+        return _hubContext.Clients.All.SendAsync(GroupName.NewsNotifications, notification);
     }
 }
