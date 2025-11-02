@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/NewsAnalyzer.Api/Dockerfile.dev
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      URLS: http://+:8080
+      Database__Provider: Sqlite
+      ConnectionStrings__AppDb: Data Source=/app/App_Data/newsanalyzer.db
+    volumes:
+      - ./:/app:cached
+      - nuget-cache:/root/.nuget/packages
+    ports:
+      - "5080:8080"
+
+volumes:
+  nuget-cache:
+
